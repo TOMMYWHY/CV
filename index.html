@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Tommy Jiang</title>
+	<link rel="stylesheet" href="a.css">
+	<script src="//at.alicdn.com/t/font_1255783_7vng0wqm503.js"></script>
+</head>
+<body>
+	<div class="topNavBar ">
+		<div class="toNavBar-inner clearfix">
+			<a class="logo" href="">
+				<span class="logo-p1">Tommy</span><span class="logo-p2">Jiang</span>
+			</a>
+			<nav>
+				<ul class="clearfix">
+					<li>
+						<a href="">ABOUT</a>
+					</li>
+					<li>
+						<a href="">SKILL</a>
+					</li>
+					<li>
+						<a href="">EXPERIENCE</a>
+					</li>
+					<li>
+						<a href="">BLOG</a>
+					</li>
+					<li>
+						<a href="">CALENDAR</a>
+					</li>
+					<li>
+						<a href="">OTHERS</a>
+					</li>
+					<li>
+						<a href="">ALL DEMOS</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+    <div class="banner">
+	    <div class="mask"></div>
+    </div>
+
+	<main style=" margin-top: -300px">
+		<div class="userCard">
+			<div class="pictureAndText clearfix">
+				<div class="picture">
+					<div class="avatar"></div>
+					<!--<img src="./img/avatar.jpeg" alt="">-->
+				</div>
+				<div class="text">
+					<div class="summary">
+						<span class="welcome">
+							Hello
+							<span class="triangle"></span>
+						</span>
+						<h1>Tommy Jiang</h1>
+						<h2>Full Stack Web Developer</h2>
+						<hr>
+						<dl>
+							<dt>Age</dt>
+							<dd>29</dd>
+							<dt>Location</dt>
+							<dd>Auckland</dd>
+							<dt>Email</dt>
+							<dd>tommywhy1989@gmail.com</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<footer class="media">
+
+				<a href=""><svg class="icon" aria-hidden="true">
+					<use xlink:href="#icon-GitHub"></use>
+				</svg></a>
+				<a href=""><svg class="icon" aria-hidden="true">
+					<use xlink:href="#icon-facebook"></use>
+				</svg></a>
+				<a href=""><svg class="icon" aria-hidden="true">
+					<use xlink:href="#icon-linkedin"></use>
+				</svg></a>
+
+
+			</footer>
+		</div>
+
+		<div class="downloadCV-wrapper" >
+			<a class="downloadCV" target="_blank"  href="./img/TommyJiang.pdf">DOWNLOAD RESUME  </a>
+		</div>
+		<p class="selfIntroduction">
+			Hello! I’m Tommy Jiang. Junior Web Developer specializing in front end development. Experienced with all stages of the development cycle for dynamic web projects. Well-versed in numerous programming languages including JavaScript, SQL, and PHP background in project management and customer relations.
+		</p>
+	</main>
+
+	<section class="skills">
+		<h2>
+			Professional Skills
+		</h2>
+		<ol class="clearfix">
+			<li>
+				<h3>THML5 &amp; CSS3</h3>
+				<div class="progressBar">
+					<div class="progress" style="width: 95%;">
+
+					</div>
+				</div>
+			</li>
+			<li>
+				<h3>MySQL</h3>
+				<div class="progressBar">
+					<div class="progress" style="width: 65%;">
+
+					</div>
+				</div>
+			</li>
+			<li>
+				<h3>Javascript</h3>
+				<div class="progressBar">
+					<div class="progress" style="width: 75%;">
+
+					</div>
+				</div>
+			</li>
+			<li>
+				<h3>Vue</h3>
+				<div class="progressBar">
+					<div class="progress" style="width: 65%;">
+
+					</div>
+				</div>
+			</li>
+			<li>
+				<h3>Laravel</h3>
+				<div class="progressBar">
+					<div class="progress" style="width: 85%;">
+
+					</div>
+				</div>
+			</li>
+			<li>
+				<h3>Magento2</h3>
+				<div class="progressBar">
+					<div class="progress" style="width: 75%;">
+
+					</div>
+				</div>
+			</li>
+		</ol>
+	</section>
+
+	<section class="portfolio">
+		<h2>Portfolio</h2>
+		<nav>
+			<ol class="clearfix">
+				<li id="portfolio1">All</li>
+				<li id="portfolio2">Framework</li>
+				<li id="portfolio3">JS &amp; CSS</li>
+			</ol>
+			<div id="portfolioBar" class="bar state-1">
+				<div class="bar-inner"></div>
+			</div>
+		</nav>
+		<div class="works">
+			<div class="big" style="top:0;left:0;">
+				<img src="./img/portfolio1.jpg" alt="">ƒ
+			</div>
+			<div class="small"  style="top:0;left:637px;">
+				<img src="./img/portfolio2.jpg" alt="">
+			</div>
+			<div class="small"  style="top:293px;left:637px;">
+				<img src="./img/portfolio2.jpg" alt="">
+			</div>
+		</div>
+	</section>
+</body>
+</html>
+<script>
+
+    portfolio1.onclick =function () {
+        portfolioBar.className='bar state-1'
+    };
+    portfolio2.onclick =function () {
+        portfolioBar.className='bar state-2'
+    };
+    portfolio3.onclick =function () {
+        portfolioBar.className='bar state-3'
+    }
+
+
+</script>
