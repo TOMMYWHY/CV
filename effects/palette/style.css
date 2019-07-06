@@ -1,0 +1,35 @@
+body{margin: 0;
+overflow: hidden;
+}
+#main{
+    /*width: 500px;*/
+    /*height:400px;*/
+    /*height:100vh;*/
+    display: block;
+    background: #eeeeee;
+    /*position: relative;*/
+}
+.dots{
+    width: 6px;
+    height:6px;
+    background: #000;
+    border-radius: 5px;
+    position: absolute;
+
+}
+
+.actions{
+     position: fixed;
+     bottom: 0;
+     left:0;
+ }
+.actions > #pen{
+    display: none;
+}
+.actions.showPen > #pen{
+    display: inline-block;
+}
+
+.actions.showPen > #eraser{
+    display: none;
+}
