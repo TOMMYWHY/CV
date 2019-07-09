@@ -6,10 +6,15 @@
 	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Tommy Jiang</title>
-	<link rel="stylesheet" href="a.css">
+	<link rel="stylesheet" href="./loading.css">
+	<link rel="stylesheet" href="./main.css">
+
 	<script src="//at.alicdn.com/t/font_1255783_7vng0wqm503.js"></script>
 </head>
 <body>
+	<div id="siteWelcome" class="site-welcome active">
+		<div class="loading"></div>
+	</div>
 	<div class="topNavBar ">
 		<div class="toNavBar-inner clearfix">
 			<a class="logo" href="">
@@ -177,6 +182,13 @@
 			</div>
 		</div>
 	</section>
+
+	<script>
+
+        window.onload = function () {
+            siteWelcome.classList.remove('active')
+        }
+	</script>
 </body>
 </html>
 <script>

@@ -77,14 +77,19 @@ ol{list-style: none}
 }
 .sizes > li {
     margin: 15px 0;
+    transition:all 0.3s;
+}
+.sizes > li.active{
+    background: #000;
+    transform: scale(1.2);
 }
 .sizes > .thin{
     height: 0;
     width: 20px;
-    border-top: 3px solid black;
+    border-top: 3px solid #353535;
 }
 .sizes > .thick{
     height: 0;
     width: 20px;
-    border-top: 10px solid black;
+    border-top: 10px solid #353535;
 }
