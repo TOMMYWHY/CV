@@ -15,24 +15,29 @@
 	<div id="siteWelcome" class="site-welcome active">
 		<div class="loading"></div>
 	</div>
-	<div class="topNavBar ">
+	<div id="topNavBar" class="topNavBar ">
 		<div class="toNavBar-inner clearfix">
 			<a class="logo" href="">
 				<span class="logo-p1">Tommy</span><span class="logo-p2">Jiang</span>
 			</a>
-			<nav>
+			<nav class="menu">
 				<ul class="clearfix">
 					<li>
-						<a href="">ABOUT</a>
+						<a href="#siteAbout">ABOUT</a>
 					</li>
 					<li>
-						<a href="">SKILL</a>
+						<a href="#siteSkill">SKILL</a>
 					</li>
 					<li>
-						<a href="">EXPERIENCE</a>
+						<a href="#siteExprience">EXPERIENCE</a>
 					</li>
-					<li>
-						<a href="">BLOG</a>
+					<li >
+						<a href="#siteBlog">BLOG</a>
+						<ul class="submenu ">
+							<li><a href="">test2asdasdsa</a></li>
+							<li><a href="">test2</a></li>
+							<li><a href="">test2</a></li>
+						</ul>
 					</li>
 					<li>
 						<a href="">CALENDAR</a>
@@ -40,8 +45,13 @@
 					<li>
 						<a href="">OTHERS</a>
 					</li>
-					<li>
-						<a href="">ALL DEMOS</a>
+					<li class="" >
+						<a href="#siteDemo">DEMOS</a>
+						<ul class="submenu ">
+							<li><a href="">test1asdasdsa</a></li>
+							<li><a href="">test1</a></li>
+							<li><a href="">test1</a></li>
+						</ul>
 					</li>
 				</ul>
 			</nav>
@@ -51,7 +61,7 @@
 	    <div class="mask"></div>
     </div>
 
-	<main style=" margin-top: -300px">
+	<main id="siteAbout" style=" margin-top: -300px">
 		<div class="userCard">
 			<div class="pictureAndText clearfix">
 				<div class="picture">
@@ -102,7 +112,7 @@
 		</p>
 	</main>
 
-	<section class="skills">
+	<section id="siteskill" class="skills">
 		<h2>
 			Professional Skills
 		</h2>
@@ -158,7 +168,7 @@
 		</ol>
 	</section>
 
-	<section class="portfolio">
+	<section id="siteDemo" class="portfolio">
 		<h2>Portfolio</h2>
 		<nav>
 			<ol class="clearfix">
@@ -183,13 +193,91 @@
 		</div>
 	</section>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.4.0/Tween.min.js"></script>
+
 	<script>
 
         window.onload = function () {
             siteWelcome.classList.remove('active')
         }
+        window.onscroll = function (e){
+//	        console.log(window.scrollY)
+	        if(window.scrollY > 0){
+                topNavBar.classList.add('sticky')
+	        }else {
+                topNavBar.classList.remove('sticky')
+	        }
+        }
+        let liTags = document.querySelectorAll('nav.menu > ul > li')
+//        console.log(liTags)
+		for (let i = 0; i < liTags.length; i++){
+            liTags[i].onmouseenter = function (e) {
+	             e.currentTarget.classList.add('active');
+            }
+
+            liTags[i].onmouseleave = function (e) {
+                e.currentTarget.classList.remove('active');
+            }
+		}
+
+		let aTags = document.querySelectorAll('nav.menu > ul > li > a')
+
+/*tween.js*/
+        // Setup the animation loop.
+        function animate(time) {
+            requestAnimationFrame(animate);
+            TWEEN.update(time);
+        }
+        requestAnimationFrame(animate);
+
+
+
+
+		for(let i = 0; i < aTags.length; i++){
+            aTags[i].onclick = function (e) {
+                e.preventDefault()
+                console.log(e.currentTarget.getAttribute('href')) //打印 锚点
+				let href = e.currentTarget.getAttribute('href')
+	            let element = document.querySelector(href)
+	            let top = element.offsetTop;
+                let targetTop = top - 100;
+                let currentTop = window.scrollY;
+				let s = targetTop - currentTop //向上滑动 s 为负值
+				let t = Math.abs( (s/100) * 300); // 时间不能是负数，所以取绝对值
+				if(t>500){
+				    t = 500
+				}
+                const coords = { x: 0, y: currentTop };
+
+                const tween = new TWEEN.Tween(coords)
+                    .to({ x: 0, y: targetTop }, t )
+                    .easing(TWEEN.Easing.Quadratic.InOut)
+                    .onUpdate(() => {
+//                        box.style.setProperty('transform', `translate(${coords.x}px, ${coords.y}px)`);
+	                    window.scrollTo(0,coords.y)
+                    })
+                    .start();
+
+               /* let targetTop = top - 100;
+                let n = 25;
+                let duration = 500/n; // t
+                let currentTop = window.scrollY;
+				let distance = (targetTop - currentTop)/n //s
+	            let i = 0
+                let id = setInterval( ()=>{
+                    if(i ===n){
+                        window.clearInterval(id)
+	                    return ;
+                    }
+                    i = i + 1;
+                    window.scrollTo( 0, currentTop + distance * i)
+                },duration)*/
+
+            }
+		}
+
 	</script>
-</body>
+ </body>
 </html>
 <script>
 

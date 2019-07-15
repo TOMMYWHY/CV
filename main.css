@@ -52,14 +52,28 @@ hr {
     position: fixed;
     top: 0;
     left: 0;
+    transition: all 0.3s;
 }
 
+.topNavBar.sticky{
+    background: white;
+    padding:10px 0;
+    z-index:1;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    color: #3d4451;
+
+}
+.topNavBar.sticky nav a{
+    padding:10px 0;
+    color: #3d4451;
+}
 .toNavBar-inner {
-    padding: 0 10px;
+    padding: 0 30px;
 }
 
 .topNavBar nav {
     float: right;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .topNavBar nav > ul {
@@ -70,28 +84,82 @@ hr {
 .topNavBar nav li {
     float: left;
     margin: 0 15px;
+    position: relative;
 }
 
-.topNavBar nav a {
-    color: rgba(255, 255, 255, 0.7);
+.topNavBar nav> ul > li > a{
+    color: inherit;
     font-size: 13px;
     font-weight: 700;
     padding: 12px 0;
-    border: 3px solid transparent;
+    /*border: 3px solid transparent;*/
+    /*border-top: 3px solid red;*/
     display: block;
+    position: relative;
 }
 
-.topNavBar nav a:hover {
-    border-bottom: 3px solid #e06567;
-    /*border-radius: 2px;*/
-    transform: translate(0, 0);
-    transition: all .3s ease-in 0s;
+.topNavBar nav li.active > a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    /*top:10%;*/
+    bottom: 0;
+    /*border-bottom: 3px solid transparent;*/
+
+    left:0;
+    width: 100%;
+    background: #e06567;
+    height: 3px;
+    /*border: 1px solid #e06567;*/
+    /*border-radius: 1px;*/
+     /*transform: translate(0, 0);*/
+    /*transition: all .3s ease-in 0s;*/
+    animation: menuSlide .3s;
+}
+@keyframes menuSlide {
+    0%{
+        width: 0;
+    }
+    100%{
+        width: 100%;
+    }
+}
+.topNavBar .submenu{
+    display: none;
+    position: absolute;
+    right:0;
+    top:100%;
+    /*margin-top: 1px;*/
+    /*bottom:0;*/
+    background: #ffffff;
+    color: #3d4451;
+    box-shadow:  0 2px  2px rgba(0,0,0,0.5);
+    /*box-shadow: 0px 5px 3px 0px rgba(0,0,0,0.75)*/
+}
+.topNavBar li.active > .submenu{
+    display: block;
+    animation: submenuSlide  .3s;
+}
+@keyframes submenuSlide {
+    0%{
+        margin-right: 100%;
+        /*transform: translateX(-30%);*/
+    }
+
+    100%{
+        margin-right: 0;
+        /*transform: translate(0);*/
+    }
 }
 
+.topNavBar .submenu > li{
+    white-space: nowrap;
+    padding:5px 10px ;
+}
 .topNavBar .logo {
     /*background: black;*/
     float: left;
-    padding-top: 20px;
+    padding-top: 5px;
     font-family: "Fredoka One";
     font-size: 24px;
     color: #9a9da2;;
@@ -325,7 +393,7 @@ section.skills .progress {
 }
 
 section.portfolio {
-    margin-top: 0px;
+    margin-top: 60px;
 }
 
 section.portfolio > nav > ol {
