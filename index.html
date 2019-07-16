@@ -61,7 +61,7 @@
 	    <div class="mask"></div>
     </div>
 
-	<main id="siteAbout" style=" margin-top: -300px">
+	<main data-x id="siteAbout" style=" margin-top: -300px">
 		<div class="userCard">
 			<div class="pictureAndText clearfix">
 				<div class="picture">
@@ -112,7 +112,7 @@
 		</p>
 	</main>
 
-	<section id="siteskill" class="skills">
+	<section  data-x  id="siteSkill" class="skills">
 		<h2>
 			Professional Skills
 		</h2>
@@ -168,7 +168,7 @@
 		</ol>
 	</section>
 
-	<section id="siteDemo" class="portfolio">
+	<section  data-x  id="siteDemo" class="portfolio">
 		<h2>Portfolio</h2>
 		<nav>
 			<ol class="clearfix">
@@ -201,13 +201,38 @@
             siteWelcome.classList.remove('active')
         }
         window.onscroll = function (e){
-//	        console.log(window.scrollY)
+	        console.log('window.scrollY',window.scrollY)
+	        //反向高亮导航
+            let specialTags = document.querySelectorAll('[data-x]')
+	        let minIndex = 0;
+            for(let i = 1; i < specialTags.length ; i++){
+//                console.log(specialTags[i].offsetTop,'specialTags[i].offsetTop')
+               if( Math.abs(specialTags[i].offsetTop - window.scrollY) < Math.abs(specialTags[minIndex].offsetTop - window.scrollY)){
+                    minIndex = i;
+               }
+            }
+            console.log('minIndex',minIndex)
+	        specialTags[minIndex].classList.add('active')
+			let id = specialTags[minIndex].id;
+//	        console.log(id)
+	        let heightLightLi = document.querySelector('a[href="#'+ id +'"]').parentNode;
+	        let navLists = heightLightLi.parentNode.children;
+	        console.log(navLists)
+	        for(let i = 0; i < navLists.length; i ++){
+	            navLists[i].classList.remove('active')
+	        }
+            heightLightLi.classList.add('active')
+
+			//nav sticky
 	        if(window.scrollY > 0){
                 topNavBar.classList.add('sticky')
 	        }else {
                 topNavBar.classList.remove('sticky')
 	        }
         }
+
+
+
         let liTags = document.querySelectorAll('nav.menu > ul > li')
 //        console.log(liTags)
 		for (let i = 0; i < liTags.length; i++){
