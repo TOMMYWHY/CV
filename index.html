@@ -196,32 +196,46 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.4.0/Tween.min.js"></script>
 
 	<script>
+        function findClosestElement() {
+            let specialTags = document.querySelectorAll('[data-x]')
+            let minIndex = 0;
+            for(let i = 1; i < specialTags.length ; i++){
+//                console.log(specialTags[i].offsetTop,'specialTags[i].offsetTop')
+                if( Math.abs(specialTags[i].offsetTop - window.scrollY) < Math.abs(specialTags[minIndex].offsetTop - window.scrollY)){
+                    minIndex = i;
+                }
+            }
+            console.log('minIndex',minIndex)
+            specialTags[minIndex].classList.remove('offset')
+
+            let id = specialTags[minIndex].id;
+//	        console.log(id)
+            let heightLightLi = document.querySelector('a[href="#'+ id +'"]').parentNode;
+            let navLists = heightLightLi.parentNode.children;
+            console.log(navLists)
+            for(let i = 0; i < navLists.length; i ++){
+                navLists[i].classList.remove('highlight')
+            }
+            heightLightLi.classList.add('highlight')
+        }
 
         window.onload = function () {
             siteWelcome.classList.remove('active')
+            findClosestElement()
         }
+
+
+        let specialTags = document.querySelectorAll('[data-x]')
+        for(let i = 0; i < specialTags.length ; i++){
+            specialTags[i].classList.add('offset')
+            }
+
+
         window.onscroll = function (e){
 	        console.log('window.scrollY',window.scrollY)
 	        //反向高亮导航
-            let specialTags = document.querySelectorAll('[data-x]')
-	        let minIndex = 0;
-            for(let i = 1; i < specialTags.length ; i++){
-//                console.log(specialTags[i].offsetTop,'specialTags[i].offsetTop')
-               if( Math.abs(specialTags[i].offsetTop - window.scrollY) < Math.abs(specialTags[minIndex].offsetTop - window.scrollY)){
-                    minIndex = i;
-               }
-            }
-            console.log('minIndex',minIndex)
-	        specialTags[minIndex].classList.add('active')
-			let id = specialTags[minIndex].id;
-//	        console.log(id)
-	        let heightLightLi = document.querySelector('a[href="#'+ id +'"]').parentNode;
-	        let navLists = heightLightLi.parentNode.children;
-	        console.log(navLists)
-	        for(let i = 0; i < navLists.length; i ++){
-	            navLists[i].classList.remove('active')
-	        }
-            heightLightLi.classList.add('active')
+
+            findClosestElement()
 
 			//nav sticky
 	        if(window.scrollY > 0){

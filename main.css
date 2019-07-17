@@ -44,11 +44,17 @@ hr {
 }
 
 /*===*/
+[data-x].offset{
 
-/*[data-x].active{
-    background: #cf5d5f;
-    transition: all .3s ease-in 0s;
-}*/
+    transform: translateY(400px);
+
+}
+[data-x]{
+
+    transform: translateY(0);
+    transition: all .4s;
+}
+
 .topNavBar {
     width: 100%;
     padding: 20px 0;
@@ -102,7 +108,8 @@ hr {
     position: relative;
 }
 
-.topNavBar nav li.active > a::after {
+.topNavBar nav li.active > a::after ,
+.topNavBar nav li.highlight > a::after {
     content: '';
     display: block;
     position: absolute;
@@ -385,7 +392,7 @@ section.skills .progressBar {
     /*border:1px solid #e6686a;*/
     border-radius: 2px;
     margin: 4px 0 40px 0;
-
+    overflow: hidden;
 }
 
 section.skills .progress {
@@ -393,7 +400,11 @@ section.skills .progress {
     background: #e8676b;
     width: 70%;
     border-radius: 2px;
-
+    transform: translateX(0);
+    transition: all 1s;
+}
+section.skills.offset .progress{
+    transform: translateX(-100%);
 }
 
 section.portfolio {
