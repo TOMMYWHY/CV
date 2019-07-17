@@ -6,8 +6,15 @@
 	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Tommy Jiang</title>
-	<link rel="stylesheet" href="./loading.css">
-	<link rel="stylesheet" href="./main.css">
+
+	<!--<link rel="icon" href="./favicon.ico" mce_href="./favicon.ico" type="image/x-icon">
+-->
+	<link rel="icon" href="./img/favicon.ico" type="image/x-icon" />
+
+
+
+	<link rel="stylesheet" href="./styles/loading.css">
+	<link rel="stylesheet" href="./styles/main.css">
 
 	<script src="//at.alicdn.com/t/font_1255783_7vng0wqm503.js"></script>
 </head>
@@ -34,23 +41,23 @@
 					<li >
 						<a href="#siteBlog">BLOG</a>
 						<ul class="submenu ">
-							<li><a href="">test2asdasdsa</a></li>
-							<li><a href="">test2</a></li>
-							<li><a href="">test2</a></li>
+							<li><a href="javascript:;">test2asdasdsa</a></li>
+							<li><a href="javascript:;">test2</a></li>
+							<li><a href="javascript:;">test2</a></li>
 						</ul>
 					</li>
 					<li>
-						<a href="">CALENDAR</a>
+						<a href="javascript:;">CALENDAR</a>
 					</li>
 					<li>
-						<a href="">OTHERS</a>
+						<a href="./effects/index.html" target="_blank">OTHERS</a>
 					</li>
 					<li class="" >
 						<a href="#siteDemo">DEMOS</a>
 						<ul class="submenu ">
-							<li><a href="">test1asdasdsa</a></li>
-							<li><a href="">test1</a></li>
-							<li><a href="">test1</a></li>
+							<li><a href="./effects/old-cv/index.html">Portfolio</a></li>
+							<li><a href="http://effects.tommywhy.com/nav-demo/index.html">Private Navigation</a></li>
+							<li><a href="http://vuecv.tommywhy.com/">Vue CV</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -274,7 +281,8 @@
 
 		for(let i = 0; i < aTags.length; i++){
             aTags[i].onclick = function (e) {
-                e.preventDefault()
+//                e.preventDefault()
+	            /*======================*/
                 console.log(e.currentTarget.getAttribute('href')) //打印 锚点
 				let href = e.currentTarget.getAttribute('href')
 	            let element = document.querySelector(href)
