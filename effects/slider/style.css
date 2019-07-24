@@ -1,0 +1,24 @@
+.window{
+    border: 2px solid red;
+    width: 300px;
+    overflow: hidden;
+}
+.images{
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid pink;
+    transition: transform 1.5s;
+}
+.images > img{
+    width: 300px;
+
+
+}
+
+.images.position-1{
+    transform:translate(0)
+}.images.position-2{
+    transform:translate(-300px)
+}.images.position-3{
+    transform:translate(-600px)
+}
