@@ -14,11 +14,6 @@
 
 
 }
-
-.images.position-1{
-    transform:translate(0)
-}.images.position-2{
-    transform:translate(-300px)
-}.images.position-3{
-    transform:translate(-600px)
+.red{
+    background: red;
 }

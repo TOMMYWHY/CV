@@ -23,33 +23,47 @@
 
 
 </div>
-	<div>
-		<button id="p1">pic1</button>
-		<button id="p2">pic2</button>
-		<button id="p3">pic3</button>
-	</div>
+	<span id="buttons">
+		<span >pic1</span>
+		<span >pic2</span>
+		<span >pic3</span>
+		<span >pic4</span>
+	</span>
 
 </body>
 </html>
 
 <script>
-	/*$('#p1').click(function (e) {
+	var allButtons = $('#buttons > span')
+	for(let i = 0; i<allButtons.length;i++){
+	    $(allButtons[i]).on('click',function (e) {
+		    var index = $(e.currentTarget).index() ;
+		    var n = index*(-300)
+		    console.log(n)
+		    $('#images').css({
+			    transform:'translate('+n+'px)'
+		    })
+        })
+	}
 
-    })*/
-	$(p1).on('click',function (e) {
-//	    console.log($(images))
-		$(images).css({
-			transform:'translateX(0)'
-		})
+	var n = 0
+	var size = allButtons.length
+    allButtons.eq(n%size).trigger('click').addClass('red').siblings('.red').removeClass('red');
+
+	var timerId = setInterval(()=>{
+        allButtons.eq(n%size).trigger('click').addClass('red').siblings('.red').removeClass('red')
+        //.eq() 将DOM 对象包装成jquery 对象
+        n++
+    },2000)
+
+    $('.window').on('mouseenter',function (e) {
+	    window.clearInterval(timerId)
     })
-    $(p2).on('click',function (e) {
-        $(images).css({
-            transform:'translateX(-300px)'
-        })
-    })
-    $(p3).on('click',function (e) {
-        $(images).css({
-            transform:'translateX(-600px)'
-        })
+    $('.window').on('mouseleave',function (e) {
+        timerId = setInterval(()=>{
+            allButtons.eq(n%size).trigger('click').addClass('red').siblings('.red').removeClass('red')
+            //.eq() 将DOM 对象包装成jquery 对象
+            n++
+        },2000)
     })
 </script>
