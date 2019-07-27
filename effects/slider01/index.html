@@ -38,32 +38,42 @@
 	for(let i = 0; i<allButtons.length;i++){
 	    $(allButtons[i]).on('click',function (e) {
 		    var index = $(e.currentTarget).index() ;
-		    var n = index*(-300)
-		    console.log(n)
+		    var p = index*(-300)
+		    console.log(p)
 		    $('#images').css({
-			    transform:'translate('+n+'px)'
+			    transform:'translate('+p+'px)'
 		    })
+		    n = index
+		    activeButton(allButtons.eq(n))
         })
 	}
 
 	var n = 0
 	var size = allButtons.length
-    allButtons.eq(n%size).trigger('click').addClass('red').siblings('.red').removeClass('red');
 
-	var timerId = setInterval(()=>{
-        allButtons.eq(n%size).trigger('click').addClass('red').siblings('.red').removeClass('red')
-        //.eq() 将DOM 对象包装成jquery 对象
-        n++
-    },2000)
+	playSlide(n%size)
+
+	var timerId = setTimer()
 
     $('.window').on('mouseenter',function (e) {
 	    window.clearInterval(timerId)
     })
     $('.window').on('mouseleave',function (e) {
-        timerId = setInterval(()=>{
-            allButtons.eq(n%size).trigger('click').addClass('red').siblings('.red').removeClass('red')
-            //.eq() 将DOM 对象包装成jquery 对象
-            n++
-        },2000)
+        timerId = setTimer()
     })
+
+	function setTimer() {
+        return setInterval(()=>{
+		            playSlide(n%size)
+		            n++
+		        },2000)
+    }
+
+	function playSlide(index) {
+        allButtons.eq(index).trigger('click')
+//        activeButton(allButtons.eq(n%size))
+    }
+    function activeButton($button) {
+        $button.addClass('red').siblings('.red').removeClass('red');//.eq() 将DOM 对象包装成jquery 对象
+    }
 </script>
