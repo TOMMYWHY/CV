@@ -1,6 +1,10 @@
 *{margin: 0;padding: 0}
 *{box-sizing: border-box}
 
+.container{
+    background: pink;
+    border: 1px solid red;
+}
 .window{
 width: 400px;
     height:300px;
@@ -9,8 +13,15 @@ width: 400px;
     border: 1px solid red;
 }
 .images{
-    position: relative;
+    /*position: relative;*/
+    display: flex;
+    transition: all .3s;
 }
+.images > img{
+    width: 100%;
+}
+
+/*
 .images > img{
     width: 100%;
     transition: all 0.3s;
@@ -28,7 +39,9 @@ width: 400px;
 }
 .images >img.enter{
     transform:translateX(100%)
-}
+}*/
+
+
 /*.images >img.stay{}*/
 /*
 .images > img:nth-child(1){
