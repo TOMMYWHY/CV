@@ -479,5 +479,30 @@ section.portfolio .works > .small {
     position: absolute;
 }
 
+section.portfolio .swiper-container {
+    width: 668px;
+    height: 501px;
+}
+section.portfolio .swiper-slide{
+    background: pink;}
 
-
+section.portfolio h2{
+    margin-bottom:32px;
+}
+section.portfolio .swiper-button-prev{
+    background-color:white;
+    width:64px;
+    height:64px;
+    border-radius: 50%;
+    right:100%;
+    left: auto;
+}
+section.portfolio .swiper-button-next{
+    background-color:white;
+    width:64px;
+    height:64px;
+    border-radius: 50%;
+    right:auto;
+    left: 100%;
+}
+section.portfolio{max-width: 720px}
