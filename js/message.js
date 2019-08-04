@@ -1,17 +1,14 @@
 !function () {
-    // console.log(AV)
-    // var asd = 'wocao'
     var view = document.querySelector('section.message');
     var controller = {
       view:null,
       messageList:null,
-      init:(view)=>{
-          console.log(AV)
+      init:function(view){
           this.view = view
+          
           this.messageList =  document.querySelector('#messageList')
           this.form = document.querySelector('#postMessageForm')
           this.initAV()
-          console.log(AV)
           this.loadMessages()
           this.bindEvents()
         },
@@ -37,7 +34,7 @@
             // .then(()=>{},(err)=>{console.log(err)});
 
         },
-        bindEvents:()=>{
+        bindEvents:function(){
             this.form.addEventListener('submit',function (e) {
                 e.preventDefault()
                 this.saveMessage()
@@ -72,8 +69,9 @@
     };
 
 
-    controller.init(view)
 
+    controller.init(view)
+    
 
 
 
