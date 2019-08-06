@@ -1,5 +1,6 @@
 !function() {
 
+    
     let specialTags = document.querySelectorAll('[data-x]')
     for(let i = 0; i < specialTags.length ; i++){
         specialTags[i].classList.add('offset')
@@ -29,6 +30,8 @@
 
         let id = specialTags[minIndex].id;
 //	        console.log(id)
+        // console.log(document.querySelector('a[href="#'+ id +'"]').parentNode);
+        
         let heightLightLi = document.querySelector('a[href="#'+ id +'"]').parentNode;
         let navLists = heightLightLi.parentNode.children;
         // console.log(navLists)
@@ -46,6 +49,8 @@
     for (let i = 0; i < liTags.length; i++){
         liTags[i].onmouseenter = function (e) {
             e.currentTarget.classList.add('active');
+            // this.classList.add('active');
+
         }
 
         liTags[i].onmouseleave = function (e) {
