@@ -4,6 +4,8 @@ const url = require('url')
 // const request = require('request')
 const port = 9999
 
+let sessions = {}
+
 let server = http.createServer(function (req, res) {
     let parsedUrl = url.parse(req.url, true);
     let pathWithQuery = req.url;
@@ -21,8 +23,10 @@ let server = http.createServer(function (req, res) {
     console.log('query string is :' + pathWithQuery)
     if (path === '/') {
         let string = fs.readFileSync('./index.html', 'utf8')
-
-        cookies = req.headers.cookie.split(';')
+        let cookies = '';
+        if (req.headers.cookie) {
+            cookies = req.headers.cookie.split(';')
+        }
         let hash = {}
         for (let i = 0; i < cookies.length; i++) {
             let parts = cookies[i].split('=');
@@ -31,7 +35,11 @@ let server = http.createServer(function (req, res) {
             hash[key] = value
         }
         console.log(hash);
-        let email = hash.signin_email
+        let mySession = sessions[hash.sessionId]
+        let email;
+        if (mySession) {
+            email = mySession.signin_email
+        }
         let users = fs.readFileSync('./db/users.json', 'utf-8')
         try {
             users = JSON.parse(users); //to object
@@ -46,15 +54,15 @@ let server = http.createServer(function (req, res) {
             }
         }
         // console.log(foundUser.password);
-        
+
         if (foundUser) {
-            string = string.replace('__password__',foundUser.password)
+            string = string.replace('__password__', foundUser.password)
         } else {
             string = string.replace('__password__', 'not login yet')
         }
-        
+
         // console.log(string);
-        
+
         res.statusCode = 200
         res.setHeader('Content-Type', 'text/html;charset=utf-8');
 
@@ -64,6 +72,19 @@ let server = http.createServer(function (req, res) {
         res.statusCode = 200
         res.setHeader('Content-Type', 'text/javascript;charset=utf-8');
         let string = fs.readFileSync('./main.js', 'utf8')
+        res.write(string)
+        res.end()
+    } else if (path === '/other.js') {
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'text/javascript;charset=utf-8');
+        res.setHeader('Cache-Control','max-age=30')
+        let string = fs.readFileSync('./other.js', 'utf8')
+        res.write(string)
+        res.end()
+    } else if (path === '/style.css') {
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'text/css;charset=utf-8');
+        let string = fs.readFileSync('./style.css', 'utf8')
         res.write(string)
         res.end()
 
@@ -102,7 +123,9 @@ let server = http.createServer(function (req, res) {
             }
             if (found === true) {
                 res.statusCode = 200
-                res.setHeader("Set-Cookie", `signin_email = ${email};HttpOnly`)
+                let sessionId = Math.random() * 10000
+                sessions[sessionId] = { signin_email: email }
+                res.setHeader("Set-Cookie", `sessionId = ${sessionId};HttpOnly`)
             } else {
                 res.statusCode = 401
             }
@@ -186,7 +209,7 @@ let server = http.createServer(function (req, res) {
         }
         `)
         res.end()
-    }else {
+    } else {
         res.statusCode = 404
         res.setHeader('Content-Type', 'text/html;charset=utf-8');
         res.write('ops~! 404')
