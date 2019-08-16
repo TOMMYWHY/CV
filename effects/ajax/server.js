@@ -20,10 +20,44 @@ let server = http.createServer(function (req, res) {
 
     console.log('query string is :' + pathWithQuery)
     if (path === '/') {
+        let string = fs.readFileSync('./index.html', 'utf8')
+
+        cookies = req.headers.cookie.split(';')
+        let hash = {}
+        for (let i = 0; i < cookies.length; i++) {
+            let parts = cookies[i].split('=');
+            let key = parts[0]
+            let value = parts[1]
+            hash[key] = value
+        }
+        console.log(hash);
+        let email = hash.signin_email
+        let users = fs.readFileSync('./db/users.json', 'utf-8')
+        try {
+            users = JSON.parse(users); //to object
+        } catch (exception) {
+            users = []
+        }
+        let foundUser;
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].email === email) {
+                foundUser = users[i];
+                break;
+            }
+        }
+        // console.log(foundUser.password);
+        
+        if (foundUser) {
+            string = string.replace('__password__',foundUser.password)
+        } else {
+            string = string.replace('__password__', 'not login yet')
+        }
+        
+        // console.log(string);
+        
         res.statusCode = 200
         res.setHeader('Content-Type', 'text/html;charset=utf-8');
-        // res.write('hi')
-        let string = fs.readFileSync('./index.html', 'utf8')
+
         res.write(string)
         res.end()
     } else if (path === '/main.js') {
@@ -32,6 +66,48 @@ let server = http.createServer(function (req, res) {
         let string = fs.readFileSync('./main.js', 'utf8')
         res.write(string)
         res.end()
+
+    } else if (path === '/signin' && method === 'GET') {
+        let string = fs.readFileSync('./signin.html', 'utf8')
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'text/html;charset=utf-8');
+        res.write(string)
+        res.end()
+    } else if (path === '/signin' && method === 'POST') {
+        readBody(req).then((body) => {
+            // console.log(body);
+            let strings = body.split('&')
+            let hash = {}
+            strings.forEach((string, index) => {
+                let parts = string.split('=')
+                let key = parts[0]
+                let value = parts[1]
+                hash[key] = decodeURIComponent(value)
+            })
+            console.log(hash);
+            let { email, password } = hash
+            let users = fs.readFileSync('./db/users.json', 'utf-8')
+            try {
+                users = JSON.parse(users); //to object
+            } catch (exception) {
+                users = []
+            }
+            let found = false;
+            for (let i = 0; i < users.length; i++) {
+                let user = users[i];
+                if (user.email === email && user.password === password) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found === true) {
+                res.statusCode = 200
+                res.setHeader("Set-Cookie", `signin_email = ${email};HttpOnly`)
+            } else {
+                res.statusCode = 401
+            }
+            res.end()
+        })
 
     } else if (path === '/signup' && method === 'GET') {
         let string = fs.readFileSync('./signup.html', 'utf8')
@@ -42,17 +118,17 @@ let server = http.createServer(function (req, res) {
     } else if (path === '/signup' && method === 'POST') {
         readBody(req).then((body) => {
             // console.log(body);
-            let strings =  body.split('&')
+            let strings = body.split('&')
             let hash = {}
-            strings.forEach((string,index)=>{
+            strings.forEach((string, index) => {
                 let parts = string.split('=')
-                let key =  parts[0]
+                let key = parts[0]
                 let value = parts[1]
-                hash[key]= value
+                hash[key] = decodeURIComponent(value)
             })
             console.log(hash);
-            let {email, password, password_confirmation} = hash
-            if(email.indexOf('@')=== -1){
+            let { email, password, password_confirmation } = hash
+            if (email.indexOf('@') === -1) {
                 res.statusCode = 400
                 res.setHeader('Content-Type', 'application/json;charset=utf-8');
 
@@ -63,11 +139,35 @@ let server = http.createServer(function (req, res) {
                     }
                 }
                 `)
-            }else if(password !== password_confirmation){
+            } else if (password !== password_confirmation) {
                 res.statusCode = 400
                 res.write('passowrd not match~!')
-            }else{
-                res.statusCode = 200
+            } else {
+                let users = fs.readFileSync('./db/users.json', 'utf-8')
+
+                try {
+                    users = JSON.parse(users); //to object
+                } catch (exception) {
+                    users = []
+                }
+                let inUse = false
+                for (let i = 0; i < users.length; i++) {
+                    let user = users[i];
+                    if (user.email === email) {
+                        inUse = true;
+                        break;
+                    }
+                }
+                if (inUse === true) {
+                    res.statusCode = 400
+                    res.write(' email used ~!')
+                } else {
+                    users.push({ email: email, password: password })
+                    let usersString = JSON.stringify(users); //to string
+                    fs.writeFileSync('./db/users.json', usersString);
+                    res.statusCode = 200
+                }
+
             }
             res.end()
         })
@@ -86,8 +186,7 @@ let server = http.createServer(function (req, res) {
         }
         `)
         res.end()
-    }
-    else {
+    }else {
         res.statusCode = 404
         res.setHeader('Content-Type', 'text/html;charset=utf-8');
         res.write('ops~! 404')
