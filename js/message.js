@@ -1,47 +1,16 @@
 !function () {
-    let view = document.querySelector('section.message');
+    let view = View('section.message')
+    // let view = document.querySelector('section.message');
 
-    let model = {
-        initAV: function () {
-            console.log(1)
-            var APP_ID = 'w3uxzEnSEsFqxgNcYgdnkWAU-MdYXbMMI'
-            var APP_KEY = '5IEkYert5bWRhfdHYUWXcyAi'
-            AV.init({ appId: APP_ID, appKey: APP_KEY })
-        },
-        //get data
-        fetch: function () {
-            var query = new AV.Query('Message');
-            return query.find() //promise
-        },
-        //save data
-        save: function (username, phone, email, content) {
-            var Message = AV.Object.extend('Message');
-            var msg = new Message();
-            msg.set('username', username);
-            msg.set('phone', phone);
-            msg.set('email', email);
-            msg.set('content', content);
-            return msg.save() //promise
-        }
-    }
+    let model = Model({ resourceName: 'Message' })
 
-    let controller = {
-        view: null,
-        model: null,
-        messageList: null,
-        init: function (view, model) {
-            this.view = view
-            this.model = model
+    let controller = Controller({
+        init: function (view, controller) {
             this.messageList = document.querySelector('#messageList')
             this.form = document.querySelector('#postMessageForm')
-            this.model.initAV()
             this.loadMessages()
-            this.bindEvents()
         },
-
-        loadMessages:function () {
-            /* var query = new AV.Query('Message');
-            query.find() */
+        loadMessages: function () {
             this.model.fetch().then((messages) => {
                 let array = messages.map((item) => { return item.attributes })
                 array.forEach((item) => {
@@ -51,8 +20,6 @@
                 })
             },
                 (err) => { alert('submit fail~! please try again...') })
-            // .then(()=>{},(err)=>{console.log(err)});
-
         },
         bindEvents: function () {
             this.form.addEventListener('submit', (e) => {
@@ -66,7 +33,12 @@
             let phone = myForm.querySelector('input[name=phone]').value;
             let email = myForm.querySelector('input[name=email]').value;
             let content = myForm.querySelector('input[name = content]').value;
-            this.model.save(username, phone, email, content).then(function (obj) {
+            this.model.save({
+                'username': username,
+                'phone': phone,
+                'email': email,
+                'content': content
+            }).then(function (obj) {
                 console.log('save successful~!')
                 // window.location.reload()
                 let li = document.createElement('li');
@@ -79,8 +51,7 @@
                 myForm.querySelector('input[name = content]').value = '';
             })
         }
-
-    };
+    })
 
 
 

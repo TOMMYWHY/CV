@@ -32,13 +32,14 @@
 //	        console.log(id)
         // console.log(document.querySelector('a[href="#'+ id +'"]').parentNode);
         
-        let heightLightLi = document.querySelector('a[href="#'+ id +'"]').parentNode;
-        let navLists = heightLightLi.parentNode.children;
+        let a = document.querySelector('a[href="#'+ id +'"]');
+        let li = a.parentNode;
+        let navLists = li.parentNode.children;
         // console.log(navLists)
         for(let i = 0; i < navLists.length; i ++){
             navLists[i].classList.remove('highlight')
         }
-        heightLightLi.classList.add('highlight')
+        li.classList.add('highlight')
     }
 
     /**

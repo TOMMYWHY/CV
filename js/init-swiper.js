@@ -1,5 +1,6 @@
 !function () {
-    let view = document.querySelector('#mySlides')
+    let view  = View('#mySlides')
+    // let view = document.querySelector('#mySlides')
     let controller = {
         view: null,
         swiper: null,
