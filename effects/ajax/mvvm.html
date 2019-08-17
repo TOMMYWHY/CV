@@ -1,0 +1,120 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+</head>
+
+<body>
+    <h1>mvvm</h1>
+    <div id="app">
+
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    /* MVC */
+    let model = {
+        data: {
+            name: '',
+            number: 0,
+            id: ''
+        },
+        fetch(id) {
+            return axios.get(`/books/${id}`).then((response) => {
+                this.data = response.data
+                return response // return 的是 response 以便于后面 调用 fetch. then()
+            })
+        },
+        update(id, data) {
+            return axios.put(`/books/${id}`, data).then((response) => {
+                this.data = response.data //更新 model.data
+                return response
+            })
+        },
+    }
+
+    let view = {
+        el: '#app',
+        template: `
+        <div>
+            book name: 《 __name__ 》
+            amount: <span id="number">__number__</span>
+        </div>
+        <div>
+            <button id='add'>add one</button>
+            <button id='minus'>minus one</button> 
+            <button id='reset'>reset</button>
+        </div>
+        `,
+        render(data) {
+            let html = this.template
+                .replace('__name__', data.name)
+                .replace('__number__', data.number)
+            $(this.el).html(html)
+        }
+    }
+
+    let controller = {
+        init({ options }) {
+            // let view = options.view;
+            // let model =options.model;
+            this.view = view
+            this.model = model
+            this.view.render(this.model.data)
+            this.bindEvents()
+            console.log(111);
+            console.log(this.model);
+
+            console.log(222);
+
+            this.model.fetch(1)
+                .then(() => {
+                    this.view.render(this.model.data)
+                }, (err) => { console.log(err); })
+        },
+        bindEvents() {
+            $(this.view.el).on('click', '#add', this.addOne.bind(this))
+
+            $(this.view.el).on('click', '#minus', this.minusOne.bind(this))
+
+            $(this.view.el).on('click', '#reset', this.reset.bind(this))
+        },
+        addOne() {
+            let orgNumber = $('#number').text();
+            let newNumber = orgNumber - 0 + 1
+            console.log('wocao');
+
+            console.log(this.model);
+
+            this.model.update(1, { number: newNumber }).then(({ data }) => {
+                // $('#number').text(newNumber);
+                this.view.render(this.model.data)
+            }, (err) => { console.log(err); })
+        },
+        minusOne() {
+            let orgNumber = $('#number').text();
+            let newNumber = orgNumber - 0 - 1
+            this.model.update(1, { number: newNumber }).then(({ data }) => {
+                view.render(model.data)
+            }, (err) => { console.log(err); })
+        },
+        reset() {
+            this.model.update(1, { number: 0 }).then(({ data }) => {
+                view.render(model.data)
+            }, (err) => { console.log(err); })
+        }
+    }
+
+
+    controller.init({ view: view, model: model })
+
+
+</script>

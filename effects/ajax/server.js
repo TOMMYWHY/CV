@@ -64,7 +64,7 @@ let server = http.createServer(function (req, res) {
         // console.log(string);
 
         res.statusCode = 200
-        res.setHeader('Content-Type', 'text/html;charset=utf-8');
+        res.setHeader('Content-Type', 'text/html;ch1arset=utf-8');
 
         res.write(string)
         res.end()
@@ -77,7 +77,7 @@ let server = http.createServer(function (req, res) {
     } else if (path === '/other.js') {
         res.statusCode = 200
         res.setHeader('Content-Type', 'text/javascript;charset=utf-8');
-        res.setHeader('Cache-Control','max-age=30')
+        res.setHeader('Cache-Control', 'max-age=30')
         let string = fs.readFileSync('./other.js', 'utf8')
         res.write(string)
         res.end()
@@ -193,6 +193,43 @@ let server = http.createServer(function (req, res) {
 
             }
             res.end()
+        })
+
+    } else if (path === '/mvvm' && method === 'GET') {
+        res.statusCode = 200
+        res.setHeader("Content-Type", 'text/html;charset=utf-8')
+        let string = fs.readFileSync('./mvvm.html')
+        res.write(string)
+        res.end()
+    } else if (path === '/books/1' && method === 'GET') {
+        readBody(req).then((body) => {
+            console.log(body);
+            res.statusCode = 200
+            // res.setHeader('Content-Type: text/json; charset=utf-8')
+            let data = {
+                name: 'nonviolent communication',
+                number: 2,
+                id: 1
+            }
+            data = JSON.stringify(data)
+            // res.send()
+            res.end(data)
+        })
+    } else if (path === '/books/1' && method === 'PUT') {
+        readBody(req).then((body) => {
+            let data = JSON.parse(body)
+            // console.log(data);
+
+            res.statusCode = 200
+            // res.setHeader('Content-Type: text/json; charset=utf-8')
+            let result = {
+                name: 'nonviolent communication',
+                number: data.number,
+                id: 1
+            }
+            result = JSON.stringify(result)
+            // res.send()
+            res.end(result)
         })
 
 
